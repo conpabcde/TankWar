@@ -1,23 +1,20 @@
+import object.GameObject;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Wall {
-    private int x;
-    private int y;
+public class Wall extends GameObject {
     private int bricks;
     private boolean isHorizontal;
-    private Image image;
 
-    public Wall(int x, int y, boolean isHorizontal, int bricks) {
-        this.x = x;
-        this.y = y;
+    public Wall(int x, int y, boolean isHorizontal, int bricks,Image[] image) {
+        super(x,y,image);
         this.bricks = bricks;
         this.isHorizontal = isHorizontal;
         init();
     }
 
     private void init() {
-        image = new ImageIcon("assets/images/brick.png").getImage();
     }
 
     public int getX() {
@@ -52,22 +49,14 @@ public class Wall {
         isHorizontal = horizontal;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
     public void draw(Graphics g) {
         if (isHorizontal) {
             for (int i = 0; i < bricks; i++) {
-                g.drawImage(getImage(), x, y + 30 * i, null);
+                g.drawImage(image[0], x, y + 30 * i, null);
             }
         } else {
             for (int i = 0; i < bricks; i++) {
-                g.drawImage(getImage(), x + 30 * i, y, null);
+                g.drawImage(image[0], x + 30 * i, y, null);
             }
         }
     }

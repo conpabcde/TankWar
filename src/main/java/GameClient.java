@@ -8,8 +8,8 @@ public class GameClient extends JComponent {
     private int frameHeight;
     private boolean stop;
     private Image backGroundMap;
-    Tank tankPlayer;
-    ArrayList<Tank> tanksEnemy = new ArrayList<>();
+    Tank playerTank;
+    ArrayList<Tank> enemyTanks = new ArrayList<>();
     ArrayList<Wall> walls = new ArrayList<>();
 
     GameClient() {
@@ -34,26 +34,37 @@ public class GameClient extends JComponent {
     }
 
     void init() {
-        tankPlayer = new Tank(400, 100, Direction.DOWN);
+
+        Image[] itankImg = new Image[8];
+        Image[] etankImg = new Image[8];
+        String[] sub = {"U", "D", "L", "R", "LU", "RU", "LD", "RD"};
+        for (int i = 0; i < itankImg.length; i++) {
+            itankImg[i] = Tools.getImage("itank" + sub[i] + ".png");
+            etankImg[i] = Tools.getImage("etank" + sub[i] + ".png");
+        }
+
+        playerTank = new Tank(400, 100, Direction.DOWN,itankImg);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                tanksEnemy.add(new Tank(250 + 90 * j, 400 + 80 * i, Direction.UP, true));
+                enemyTanks.add(new Tank(250 + 90 * j, 400 + 80 * i, Direction.UP, true,etankImg));
             }
         }
-        walls.add(new Wall(100, 200,true,15));
-        walls.add(new Wall(650, 200,true,15));
-        walls.add(new Wall(200, 200,false,13));
-        backGroundMap = new ImageIcon("assets/images/map_sand.jpg").getImage();
+        Image[] image = {Tools.getImage("brick.png")};
+        walls.add(new Wall(100, 200, true, 15, image));
+        walls.add(new Wall(650, 200, true, 15, image));
+        walls.add(new Wall(200, 200, false, 13, image));
+        backGroundMap = Tools.getImage("map_sand.jpg");
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
-        //g.drawImage(0,0,backGroundMap);
-        g.fillRect(0, 0, frameWidth, frameHeight);
-        tankPlayer.draw(g);
-        for (Tank t : tanksEnemy) {
+//        g.setColor(Color.BLACK);
+//        g.drawImage(backGroundMap,1024,864,null);
+//        g.fillRect(0, 0, frameWidth, frameHeight);
+        g.drawImage(backGroundMap,0,0,null);
+        playerTank.draw(g);
+        for (Tank t : enemyTanks) {
             t.draw(g);
         }
         for (Wall w : walls) {
@@ -62,7 +73,7 @@ public class GameClient extends JComponent {
     }
 
     public void keyPress(KeyEvent e) {
-        boolean[] dirs = tankPlayer.getDirs();
+        boolean[] dirs = playerTank.getDirs();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 dirs[0] = true;
@@ -83,7 +94,7 @@ public class GameClient extends JComponent {
     }
 
     public void keyRelease(KeyEvent e) {
-        boolean[] dirs = tankPlayer.getDirs();
+        boolean[] dirs = playerTank.getDirs();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 dirs[0] = false;

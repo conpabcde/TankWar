@@ -8,6 +8,7 @@ public class Tank {
     private int y;
     private int speed;
     private Direction direction;
+    private boolean[] dirs = new boolean[4];
 
     public Tank(int x, int y, Direction direction) {
         this.x = x;
@@ -17,7 +18,7 @@ public class Tank {
     }
 
     private void init() {
-       speed = 5;
+        speed = 5;
     }
 
     public int getX() {
@@ -38,6 +39,10 @@ public class Tank {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public boolean[] getDirs() {
+        return dirs;
     }
 
     public void setDirection(Direction direction) {
@@ -77,7 +82,7 @@ public class Tank {
         if (direction == Direction.DOWN_RIGHT) {
             return new ImageIcon("assets/images/itankRD.png").getImage();
         }
-            return null;
+        return null;
     }
 
     public void move() {
@@ -111,5 +116,41 @@ public class Tank {
                 x += speed;
                 break;
         }
+    }
+    public void detectDirection() {
+        if (dirs[0] && !dirs[1] && !dirs[2] && !dirs[3]) {
+            direction = Direction.UP;
+        } else if (!dirs[0] && dirs[1] && !dirs[2] && !dirs[3]) {
+            direction = Direction.DOWN;
+        } else if (!dirs[0] && !dirs[1] && dirs[2] && !dirs[3]) {
+            direction = Direction.LEFT;
+        } else if (!dirs[0] && !dirs[1] && !dirs[2] && dirs[3]) {
+            direction = Direction.RIGHT;
+        } else if (dirs[0] && !dirs[1] && dirs[2] && !dirs[3]) {
+            direction = Direction.UP_LEFT;
+        } else if (dirs[0] && !dirs[1] && !dirs[2] && dirs[3]) {
+            direction = Direction.UP_RIGHT;
+        } else if (!dirs[0] && dirs[1] && dirs[2] && !dirs[3]) {
+            direction = Direction.DOWN_LEFT;
+        } else if (!dirs[0] && dirs[1] && !dirs[2] && dirs[3]) {
+            direction = Direction.DOWN_RIGHT;
+        }
+    }
+
+    public void draw(Graphics g) {
+        if (isRunning()) {
+            detectDirection();
+            move();
+        }
+        g.drawImage(getImage(),x,y,null);
+    }
+
+    public boolean isRunning() {
+        for (int i = 0 ; i < dirs.length; i ++){
+            if (dirs[i]) {
+                return true;
+            }
+        }
+        return false;
     }
 }

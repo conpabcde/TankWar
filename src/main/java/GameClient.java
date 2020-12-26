@@ -39,51 +39,50 @@ public class GameClient extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(tankPlayer.getImage(), tankPlayer.getX(), tankPlayer.getY(), null);
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,frameWidth,frameHeight);
+        tankPlayer.draw(g);
     }
 
     public void keyPress(KeyEvent e) {
+        boolean[] dirs = tankPlayer.getDirs();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                tankPlayer.setDirection(Direction.UP);
+                dirs[0] = true;
                 break;
 
             case KeyEvent.VK_DOWN:
-                tankPlayer.setDirection(Direction.DOWN);
-                break;
-
-            case KeyEvent.VK_RIGHT:
-                tankPlayer.setDirection(Direction.RIGHT);
+                dirs[1] = true;
                 break;
 
             case KeyEvent.VK_LEFT:
-                tankPlayer.setDirection(Direction.LEFT);
+                dirs[2] = true;
+                break;
+
+            case KeyEvent.VK_RIGHT:
+                dirs[3] = true;
                 break;
         }
-
-        tankPlayer.move();
     }
 
     public void keyRelease(KeyEvent e) {
+        boolean[] dirs = tankPlayer.getDirs();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                tankPlayer.setDirection(Direction.UP);
+                dirs[0] = false;
                 break;
 
             case KeyEvent.VK_DOWN:
-                tankPlayer.setDirection(Direction.DOWN);
-                break;
-
-            case KeyEvent.VK_RIGHT:
-                tankPlayer.setDirection(Direction.RIGHT);
+                dirs[1] = false;
                 break;
 
             case KeyEvent.VK_LEFT:
-                tankPlayer.setDirection(Direction.LEFT);
+                dirs[2] = false;
                 break;
 
+            case KeyEvent.VK_RIGHT:
+                dirs[3] = false;
+                break;
         }
-        tankPlayer.move();
     }
-
 }

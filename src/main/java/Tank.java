@@ -1,5 +1,3 @@
-package object;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,11 +7,17 @@ public class Tank {
     private int speed;
     private Direction direction;
     private boolean[] dirs = new boolean[4];
+    private boolean isEnemy;
 
     public Tank(int x, int y, Direction direction) {
+        this(x, y, direction, false);
+    }
+
+    public Tank(int x, int y, Direction direction, boolean isEnemy) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.isEnemy = isEnemy;
         init();
     }
 
@@ -58,29 +62,30 @@ public class Tank {
     }
 
     public Image getImage() {
+        String name = isEnemy ? "etank" : "itank";
         if (direction == Direction.UP) {
-            return new ImageIcon("assets/images/itankU.png").getImage();
+            return new ImageIcon("assets/images/" + name + "U.png").getImage();
         }
         if (direction == Direction.DOWN) {
-            return new ImageIcon("assets/images/itankD.png").getImage();
+            return new ImageIcon("assets/images/" + name + "D.png").getImage();
         }
         if (direction == Direction.RIGHT) {
-            return new ImageIcon("assets/images/itankR.png").getImage();
+            return new ImageIcon("assets/images/" + name + "R.png").getImage();
         }
         if (direction == Direction.LEFT) {
-            return new ImageIcon("assets/images/itankL.png").getImage();
+            return new ImageIcon("assets/images/" + name + "L.png").getImage();
         }
         if (direction == Direction.UP_LEFT) {
-            return new ImageIcon("assets/images/itankLU.png").getImage();
+            return new ImageIcon("assets/images/" + name + "LU.png").getImage();
         }
         if (direction == Direction.UP_RIGHT) {
-            return new ImageIcon("assets/images/itankRU.png").getImage();
+            return new ImageIcon("assets/images/" + name + "RU.png").getImage();
         }
         if (direction == Direction.DOWN_LEFT) {
-            return new ImageIcon("assets/images/itankLD.png").getImage();
+            return new ImageIcon("assets/images/" + name + "LD.png").getImage();
         }
         if (direction == Direction.DOWN_RIGHT) {
-            return new ImageIcon("assets/images/itankRD.png").getImage();
+            return new ImageIcon("assets/images/" + name + "RD.png").getImage();
         }
         return null;
     }
@@ -117,6 +122,7 @@ public class Tank {
                 break;
         }
     }
+
     public void detectDirection() {
         if (dirs[0] && !dirs[1] && !dirs[2] && !dirs[3]) {
             direction = Direction.UP;
@@ -142,11 +148,11 @@ public class Tank {
             detectDirection();
             move();
         }
-        g.drawImage(getImage(),x,y,null);
+        g.drawImage(getImage(), x, y, null);
     }
 
     public boolean isRunning() {
-        for (int i = 0 ; i < dirs.length; i ++){
+        for (int i = 0; i < dirs.length; i++) {
             if (dirs[i]) {
                 return true;
             }

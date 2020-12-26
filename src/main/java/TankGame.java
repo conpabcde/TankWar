@@ -3,8 +3,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TankGame {
+
+    static GameClient gameClient = new GameClient();
     public static void main(String[] args) {
-        GameClient gameClient = new GameClient();
+        gameClient = new GameClient();
         JFrame frame = new JFrame();
         frame.add(gameClient);
         frame.setVisible(true);

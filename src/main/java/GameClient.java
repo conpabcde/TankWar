@@ -13,7 +13,7 @@ public class GameClient extends JComponent {
     ArrayList<Wall> walls = new ArrayList<>();
 
     GameClient() {
-        this(800, 800);
+        this(800, 600);
     }
 
     GameClient(int frameWidth, int frameHeight) {
@@ -112,5 +112,13 @@ public class GameClient extends JComponent {
                 dirs[3] = false;
                 break;
         }
+    }
+
+    public int getFrameWidth() {
+        return frameWidth;
+    }
+
+    public int getFrameHeight() {
+        return frameHeight;
     }
 }

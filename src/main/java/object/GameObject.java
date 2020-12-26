@@ -42,5 +42,13 @@ public abstract class GameObject {
     public void setImage(Image[] image) {
         this.image = image;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
 

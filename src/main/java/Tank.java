@@ -75,6 +75,17 @@ public class Tank extends GameObject {
                 x += speed;
                 break;
         }
+        if (x < 0) {
+            x = 0;
+        } else if (x > TankGame.gameClient.getFrameWidth() - width) {
+            x = TankGame.gameClient.getFrameWidth() - width;
+        }
+
+        if (y < 0) {
+            y = 0;
+        } else if (y > TankGame.gameClient.getFrameHeight() - height) {
+            y = TankGame.gameClient.getFrameHeight() - height;
+        }
     }
 
     public void detectDirection() {
